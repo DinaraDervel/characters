@@ -1,50 +1,26 @@
-# React + TypeScript + Vite
+# 🔍 Rick and Morty Search
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **Rick and Morty** character search app with **Infinite Scroll** support.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔎 Search for characters by name (starting from 4+ characters)
+- 📜 Infinite scrolling for seamless content loading
+- 💾 Saves the last search query in `localStorage`
+- 🔗 Navigate to character details using the `URL` from the API
 
-## Expanding the ESLint configuration
+## 🏗️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- ⚛️ React + TypeScript
+- 🎨 SCSS Modules
+- 🌍 Fetch API
+- 🏎 Intersection Observer (for Infinite Scroll)
+- ⚡ Vite for fast development and optimized builds
 
-- Configure the top-level `parserOptions` property like this:
+## 📄 API
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Powered by <a href='https://rickandmortyapi.com/documentation'>Rick and Morty API</a>.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 👨‍💻 Author
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Dinara Dervel
