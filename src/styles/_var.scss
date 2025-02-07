@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "FiraSans";
+  src: url("/fonts/FiraSans-Regular.ttf");
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Regular.ttf");
+}
+
+$font-firasans: "FiraSans", "Montserrat", Arial, Helvetica, sans-serif;
+$font-montserrat: "Montserrat", Arial, Helvetica, sans-serif;
+
+$black: #282626;
+$gray: #767676;
+$blue: #656ec2;
+$green: #267504;
+$red: #820a0a;

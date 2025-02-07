@@ -1,0 +1,56 @@
+@use "../../styles/_var" as var;
+
+.card {
+  box-shadow: 0px 7px 25px 0px #64646f33;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.name {
+  margin: 20px 34px 56px 34px;
+  font-family: var.$font-firasans;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.bottom {
+  margin: 0 34px 20px 34px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  font-family: var.$font-montserrat;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: left;
+  color: var.$gray;
+}
+.status {
+  font-weight: 700;
+}
+.redStatus {
+  color: var.$red;
+}
+.greenStatus {
+  color: var.$green;
+}
+
+.firstTwo {
+  .name {
+    margin: 20px 34px 131px 30px;
+    font-size: 30px;
+  }
+  .bottom {
+    margin: 0 34px 21px 30px;
+  }
+}
