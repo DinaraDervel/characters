@@ -33,7 +33,11 @@ export default function Card({ index, character }: CardProps) {
             {dateCreated.getDate().toString().length > 1
               ? dateCreated.getDate()
               : "0" + dateCreated.getDate()}
-            .{dateCreated.getMonth() + 1}.{dateCreated.getFullYear()}
+            .
+            {dateCreated.getMonth() + 1 > 9
+              ? dateCreated.getMonth() + 1
+              : "0" + Number(dateCreated.getMonth() + 1)}
+            .{dateCreated.getFullYear()}
           </span>
         </p>
       </div>
