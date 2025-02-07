@@ -24,13 +24,13 @@ function Search() {
   const [found, setFound] = useState(0);
   const observerTarget = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const isFetching = useRef(false); // Флаг для предотвращения дублирующихся запросов
+  const isFetching = useRef(false);
 
   // Загружаем запрос из localStorage при монтировании компонента
   useEffect(() => {
     const savedQuery = localStorage.getItem("query");
     if (savedQuery) {
-      setQuery(savedQuery); // Восстанавливаем запрос
+      setQuery(savedQuery);
     }
   }, []);
 
@@ -81,7 +81,7 @@ function Search() {
       setFound(0);
     } finally {
       setLoading(false);
-      isFetching.current = false; // Разрешаем новый запрос
+      isFetching.current = false;
     }
   };
 
@@ -93,7 +93,7 @@ function Search() {
 
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && nextPage) {
+        if (entry.isIntersecting) {
           fetchCharacters(nextPage);
         }
       },
@@ -128,8 +128,7 @@ function Search() {
           ))}
         </div>
       )}
-      <div ref={observerTarget} style={{ height: 20 }} />{" "}
-      {/* Следящий элемент */}
+      <div ref={observerTarget} style={{ height: 20 }} />
       {loading && <p>Loading...</p>}
     </div>
   );
