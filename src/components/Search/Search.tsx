@@ -44,6 +44,7 @@ function Search() {
   // Загружаем первую страницу при изменении запроса (если 4+ символа)
   useEffect(() => {
     if (query.length > 3) {
+      setResults([]);
       setNextPage(
         `https://rickandmortyapi.com/api/character/?name=${query}&page=1`
       );
