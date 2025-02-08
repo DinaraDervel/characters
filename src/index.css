@@ -11,7 +11,7 @@ html {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  place-items: flex-start;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -19,5 +19,5 @@ body {
 #root {
   max-width: 1920px;
   width: 100%;
-  margin: 10px auto;
+  margin: 128px auto;
 }
