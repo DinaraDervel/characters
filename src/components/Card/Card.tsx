@@ -6,39 +6,39 @@ interface CardProps {
   character: Character;
 }
 
+function formatDate(date: Date) {
+  return `${
+    date.getDate().toString().length > 1 ? date.getDate() : "0" + date.getDate()
+  }.${
+    date.getMonth() + 1 > 9
+      ? date.getMonth() + 1
+      : "0" + Number(date.getMonth() + 1)
+  }.${date.getFullYear()}`;
+}
+
 export default function Card({ index, character }: CardProps) {
-  const firstTwoStyle = (index === 0 || index === 1) && `${styles.firstTwo}`;
+  const firstTwoStyle = index === 0 || index === 1 ? `${styles.firstTwo}` : "";
   const dateCreated = new Date(character.created);
-  const statusRed = character.status === "Dead" && `${styles.redStatus}`;
-  const statusGreen = character.status === "Alive" && `${styles.greenStatus}`;
+  const statusDead = character.status === "Dead" ? `${styles.dead}` : "";
+  const statusAlive = character.status === "Alive" ? `${styles.alive}` : "";
 
   return (
     <div
       className={`${styles.card} ${firstTwoStyle}`}
       onClick={() => (window.location.href = character.url)}
     >
-      <p className={styles.name}>
+      <p className={styles.cardTop}>
         {character.name} - {character.species}
       </p>
-      <div className={styles.bottom}>
+      <div className={styles.cardBottom}>
         <p>
           Status:{" "}
-          <span className={`${styles.status} ${statusRed} ${statusGreen}`}>
+          <span className={`${styles.status} ${statusDead} ${statusAlive}`}>
             {character.status}
           </span>
         </p>
         <p>
-          Created:{" "}
-          <span>
-            {dateCreated.getDate().toString().length > 1
-              ? dateCreated.getDate()
-              : "0" + dateCreated.getDate()}
-            .
-            {dateCreated.getMonth() + 1 > 9
-              ? dateCreated.getMonth() + 1
-              : "0" + Number(dateCreated.getMonth() + 1)}
-            .{dateCreated.getFullYear()}
-          </span>
+          Created: <span>{formatDate(dateCreated)}</span>
         </p>
       </div>
     </div>
