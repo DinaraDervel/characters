@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./search.module.scss";
 import Card from "../Card/Card";
 
+const MIN_SEARCH_LENGTH = 4;
+
 export interface Character {
   id: number;
   name: string;
@@ -19,9 +21,9 @@ interface ApiResponse {
 function Search() {
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<Character[]>([]);
-  const [nextPage, setNextPage] = useState<string | null>(null);
+  const [nextPageURL, setNextPageURL] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [found, setFound] = useState(0);
+  const [resultsCount, setResultsCount] = useState(0);
   const observerTarget = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const isFetching = useRef(false);
@@ -36,22 +38,22 @@ function Search() {
 
   // Сохраняем запрос в localStorage при его изменении
   useEffect(() => {
-    if (query.length > 3) {
+    if (query.length >= MIN_SEARCH_LENGTH) {
       localStorage.setItem("query", query);
     }
   }, [query]);
 
   // Загружаем первую страницу при изменении запроса (если 4+ символа)
   useEffect(() => {
-    if (query.length > 3) {
+    if (query.length >= MIN_SEARCH_LENGTH) {
       setResults([]);
-      setNextPage(
+      setNextPageURL(
         `https://rickandmortyapi.com/api/character/?name=${query}&page=1`
       );
     } else {
       setResults([]);
-      setNextPage(null);
-      setFound(0);
+      setNextPageURL(null);
+      setResultsCount(0);
     }
   }, [query]);
 
@@ -68,17 +70,17 @@ function Search() {
       }
       const data: ApiResponse = await response.json();
       if (!data.results) {
-        setNextPage(null);
-        setFound(0);
+        setNextPageURL(null);
+        setResultsCount(0);
         return;
       }
       setResults((prev) => [...prev, ...data.results]);
-      setNextPage(data.info.next);
-      setFound(data.info.count);
+      setNextPageURL(data.info.next);
+      setResultsCount(data.info.count);
     } catch (error) {
-      console.error("Ошибка загрузки:", error);
-      setNextPage(null);
-      setFound(0);
+      console.error("Ошибка загрузки.", error);
+      setNextPageURL(null);
+      setResultsCount(0);
     } finally {
       setLoading(false);
       isFetching.current = false;
@@ -87,14 +89,14 @@ function Search() {
 
   // Observer для подгрузки новых страниц
   useEffect(() => {
-    if (!nextPage) return;
+    if (!nextPageURL) return;
 
     if (observerRef.current) observerRef.current.disconnect(); // Убираем старый observer
 
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          fetchCharacters(nextPage);
+          fetchCharacters(nextPageURL);
         }
       },
       { rootMargin: "100px" }
@@ -104,7 +106,7 @@ function Search() {
       observerRef.current.observe(observerTarget.current);
 
     return () => observerRef.current?.disconnect();
-  }, [nextPage]);
+  }, [nextPageURL]);
 
   return (
     <div className={styles.container}>
@@ -117,12 +119,14 @@ function Search() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search characters..."
         />
-        {query.length > 3 && (
-          <p className={styles.found}>Found characters: {found}</p>
+        {query.length >= MIN_SEARCH_LENGTH && (
+          <p className={styles.resultsCount}>
+            Found characters: {resultsCount}
+          </p>
         )}
       </div>
-      {query.length > 3 && (
-        <div className={styles.wrapper}>
+      {query.length >= MIN_SEARCH_LENGTH && (
+        <div className={styles.cardWrapper}>
           {results.map((item, index) => (
             <Card key={item.id} index={index} character={item} />
           ))}
